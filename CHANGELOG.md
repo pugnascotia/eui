@@ -1,6 +1,8 @@
 # [`master`](https://github.com/elastic/eui/tree/master)
 
-No public interface changes since `0.0.25`.
+- Don't propagate a null `onClick` on EuiPanels
+- Use 1.1px for the default horizontal line height, in order to work around
+  strange Chrome height calculations.
 
 # [`0.0.24`](https://github.com/elastic/eui/tree/v0.0.24)
 
