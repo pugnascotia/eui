@@ -13,7 +13,6 @@
     "react"
   ],
   "plugins": [
-    "pegjs-inline-precompile",
     "add-module-exports",
     [
       "react-docgen",

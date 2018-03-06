@@ -702,13 +702,6 @@ babel-plugin-jest-hoist@^22.1.0:
   version "22.1.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-22.1.0.tgz#c1281dd7887d77a1711dc760468c3b8285dde9ee"
 
-babel-plugin-pegjs-inline-precompile@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-pegjs-inline-precompile/-/babel-plugin-pegjs-inline-precompile-0.1.0.tgz#3307f2b373a844296385311a7c528c53414dc57e"
-  dependencies:
-    babylon "^6.18.0"
-    pegjs "^0.10.0"
-
 babel-plugin-react-docgen@^1.8.2:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-react-docgen/-/babel-plugin-react-docgen-1.8.2.tgz#4615da43588c8cf5bdcae028f217954c70e6770b"
