@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { HTMLAttributes, SFC } from 'react';
 import classNames from 'classnames';
 
+import { CommonProps, keysOf } from '../common';
 import { isColorDark, hexToRgb } from '../../services/color';
 import { VISUALIZATION_COLORS } from '../../services';
 
@@ -13,24 +13,41 @@ const sizeToClassNameMap = {
   'xl': 'euiAvatar--xl',
 };
 
-export const SIZES = Object.keys(sizeToClassNameMap);
+export const SIZES = keysOf(sizeToClassNameMap);
 
 const typeToClassNameMap = {
   space: 'euiAvatar--space',
   user: 'euiAvatar--user',
 };
 
-export const TYPES = Object.keys(typeToClassNameMap);
+export const TYPES = keysOf(typeToClassNameMap);
 
-export const EuiAvatar = ({
+export type AvatarSize = 'none' | 's' | 'm' | 'l' | 'xl';
+
+export type AvatarType = 'user' | 'space';
+
+export interface EuiAvatarProps {
+  name: string;
+  color?: string;
+  initials?: string;
+  initialsLength?: number;
+  className?: string;
+  imageUrl?: string;
+  size?: AvatarSize;
+  type?: AvatarType;
+}
+
+type Props = CommonProps & HTMLAttributes<HTMLDivElement> & EuiAvatarProps;
+
+export const EuiAvatar: SFC<Props> = ({
   className,
   color,
   imageUrl,
   initials,
   initialsLength,
   name,
-  size,
-  type,
+  size = 'm',
+  type = 'user',
   ...rest
 }) => {
   const classes = classNames(
@@ -39,6 +56,26 @@ export const EuiAvatar = ({
     typeToClassNameMap[type],
     className
   );
+
+  if (color) {
+    const validHex = /^#(?:[0-9A-F]{6})|(?:[0-9A-F]{3})$/i.test(color);
+    if (!validHex) {
+      // tslint:disable-next-line:no-console
+      console.error('EuiAvatar needs a valid color. This can either be a three or six character hex value');
+    }
+  }
+
+  // Must be the number "1" or "2"
+  if (initialsLength && initialsLength > 2) {
+    // tslint:disable-next-line:no-console
+    console.error('EuiAvatar only accepts 1 or 2 for the initials as a number');
+  }
+
+  // Must be a string of 1 or 2 characters
+  if (initials && initials.length > 2) {
+    // tslint:disable-next-line:no-console
+    console.error('EuiAvatar only accepts a max of 2 characters for the initials as a string');
+  }
 
   let optionalInitial;
   if (name && !imageUrl) {
@@ -58,7 +95,7 @@ export const EuiAvatar = ({
     } else {
       if (name.trim() && name.split(' ').length > 1) {
         // B. If there are any spaces in the name, set to first letter of each word
-        calculatedInitials = name.match(/\b(\w)/g).join('').substring(0, calculatedInitialsLength);
+        calculatedInitials = name.match(/\b(\w)/g)!.join('').substring(0, calculatedInitialsLength);
       } else {
         // C. Set to the name's initials truncated based on calculated length
         calculatedInitials = name.substring(0, calculatedInitialsLength);
@@ -71,7 +108,8 @@ export const EuiAvatar = ({
   }
 
   const assignedColor = color || VISUALIZATION_COLORS[Math.floor(name.length % VISUALIZATION_COLORS.length)];
-  const textColor = isColorDark(...hexToRgb(assignedColor)) ? '#FFFFFF' : '#000000';
+  const [r, g, b] = hexToRgb(assignedColor);
+  const textColor = isColorDark(r, g, b) ? '#FFFFFF' : '#000000';
 
   const avatarStyle = {
     backgroundImage: imageUrl ? `url(${  imageUrl  })` : 'none',
@@ -90,69 +128,4 @@ export const EuiAvatar = ({
       {optionalInitial}
     </div>
   );
-};
-
-// TODO: Migrate to a service
-function checkValidColor(props, propName, componentName) {
-  const validHex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(props.color);
-  if (props.color && !validHex) {
-    throw new Error(
-      `${componentName} needs to pass a valid color. This can either be a three ` +
-      `or six character hex value`
-    );
-  }
-}
-
-function checkValidInitials(props, propName, componentName) {
-  // Must be the number "1" or "2"
-  if (props.initialsLength && props.initialsLength > 2) {
-    throw new Error(
-      `${componentName} only accepts 1 or 2 for the initials as a number`
-    );
-  }
-
-  // Must be a string of 1 or 2 characters
-  if (props.initials && props.initials.length > 2) {
-    throw new Error(
-      `${componentName} only accepts a max of 2 characters for the initials as a string`
-    );
-  }
-}
-
-EuiAvatar.propTypes = {
-  className: PropTypes.string,
-  imageUrl: PropTypes.string,
-  size: PropTypes.oneOf(SIZES),
-
-  /**
-   * Full name of avatar for title attribute and calculating initial if not provided
-   */
-  name: PropTypes.string.isRequired,
-
-  /**
-   * Accepts hex value `#FFFFFF`, `#000` otherwise a viz palette color will be assigned
-   */
-  color: checkValidColor,
-
-  /**
-   * Specify how many characters to show (max 2 allowed).
-   * By default, will show based on number of words.
-   */
-  initialsLength: checkValidInitials,
-
-  /**
-   * Custom initials (max 2 characters).
-   * By default will take the first character (of each word).
-   */
-  initials: checkValidInitials,
-
-  /**
-   * The type of avatar to this is displaying
-   */
-  type: PropTypes.oneOf(TYPES),
-};
-
-EuiAvatar.defaultProps = {
-  size: 'm',
-  type: 'user',
 };
