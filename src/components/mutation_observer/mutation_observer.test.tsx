@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { EuiMutationObserver } from './mutation_observer';
 
-async function sleep(duration) {
+async function sleep(duration: number) {
   return new Promise(resolve => {
     setTimeout(resolve, duration);
   });
@@ -18,7 +18,7 @@ describe('EuiMutationObserver', () => {
     expect.assertions(1);
     const onMutation = jest.fn();
 
-    function Wrapper({ value }) {
+    function Wrapper({ value }: { value: number }) {
       return (
         <EuiMutationObserver observerOptions={{ attributes: true }} onMutation={onMutation}>
           {mutationRef => <div ref={mutationRef} data-test-ref={value}>Hello World</div>}
