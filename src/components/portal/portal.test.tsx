@@ -5,6 +5,7 @@ import { EuiPortal } from './portal';
 
 // TODO: Temporary hack which we can remove once react-test-renderer supports portals.
 // More info at https://github.com/facebook/react/issues/11565.
+// @ts-ignore
 ReactDOM.createPortal = node => node;
 
 describe('EuiPortal', () => {

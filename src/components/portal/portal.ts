@@ -4,22 +4,30 @@
  */
 
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
-export const insertPositions = {
+export const insertPositions: { [position: string]: InsertPosition } = {
   'after': 'afterend',
   'before': 'beforebegin',
 };
 
 export const INSERT_POSITIONS = Object.keys(insertPositions);
 
-export class EuiPortal extends Component {
-  constructor(props) {
+interface Props {
+  insert?: {
+    sibling: HTMLElement;
+    position: 'after' | 'before';
+  };
+  portalRef?: (portalRef: HTMLDivElement) => void;
+}
+
+export class EuiPortal extends Component<Props> {
+  portalNode: HTMLDivElement;
+
+  constructor(props: Props) {
     super(props);
 
     const {
-      children, // eslint-disable-line no-unused-vars
       insert,
     } = this.props;
 
@@ -42,8 +50,14 @@ export class EuiPortal extends Component {
   }
 
   componentWillUnmount() {
-    this.portalNode.parentNode.removeChild(this.portalNode);
-    this.portalNode = null;
+    if (this.portalNode != null) {
+      if (this.portalNode.parentNode != null) {
+        this.portalNode.parentNode.removeChild(this.portalNode);
+      }
+      // @ts-ignore only null because we're unmounting, and it's cleaner to suppress the
+      // warning than handle nulls everywhere else.
+      this.portalNode = null;
+    }
     this.updatePortalRef();
   }
 
@@ -60,13 +74,3 @@ export class EuiPortal extends Component {
     );
   }
 }
-
-EuiPortal.propTypes = {
-  children: PropTypes.node,
-  /** `{sibling: HTMLElement, position: 'before'|'after'}` */
-  insert: PropTypes.shape({
-    sibling: PropTypes.instanceOf(HTMLElement).isRequired,
-    position: PropTypes.oneOf(INSERT_POSITIONS).isRequired,
-  }),
-  portalRef: PropTypes.func,
-};
