@@ -32,6 +32,9 @@ module.exports = {
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
+    alias: {
+      '@elastic/eui': path.resolve(__dirname, '../src'),
+    },
   },
 
   module: {
