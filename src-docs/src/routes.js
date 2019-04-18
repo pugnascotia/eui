@@ -258,8 +258,11 @@ import { ToggleExample }
 import { WindowEventExample }
   from './views/window_event/window_event_example';
 
-import { ElasticChartBarExample }
-  from './views/elastic_charts/bar_example';
+import { ElasticChartsTypesExample }
+  from './views/elastic_charts_types/types_example';
+
+import { ElasticChartsExtrasExample }
+  from './views/elastic_charts_extras/extras_example';
 
 import { XYChartExample }
   from './views/series_chart/series_chart_example';
@@ -430,7 +433,8 @@ const navigation = [{
 {
   name: 'Elastic-Charts',
   items: [
-    ElasticChartBarExample,
+    ElasticChartsTypesExample,
+    ElasticChartsExtrasExample,
   ].map(example => createExample(example)),
 },
 {
