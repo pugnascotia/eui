@@ -55,9 +55,7 @@ export class ResizeObserverExample extends Component {
             </p>
           )}
           <p>
-            <EuiCode>{`height: ${this.state.height}; width: ${
-              this.state.width
-            }`}</EuiCode>
+            <EuiCode>{`height: ${this.state.height}; width: ${this.state.width}`}</EuiCode>
           </p>
         </EuiText>
 

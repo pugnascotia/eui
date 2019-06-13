@@ -37,9 +37,7 @@ export class EuiFormControlLayout extends Component {
     let clonedChildren;
     if ((prepend || append) && children) {
       clonedChildren = cloneElement(children, {
-        className: `${
-          children.props.className
-        } euiFormControlLayout__child--noStyle`,
+        className: `${children.props.className} euiFormControlLayout__child--noStyle`,
       });
     }
 

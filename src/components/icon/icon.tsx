@@ -531,7 +531,7 @@ export class EuiIcon extends Component<Props, State> {
           src={icon}
           className={classes}
           tabIndex={tabIndex}
-          {...rest as HTMLAttributes<HTMLImageElement>}
+          {...(rest as HTMLAttributes<HTMLImageElement>)}
         />
       );
     } else {

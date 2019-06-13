@@ -87,7 +87,7 @@ React.FunctionComponent<ExclusiveUnion<Spanlike, Buttonlike>>
  * returns { 'four': never, 'five': never }
  */
 export type DisambiguateSet<T, U> = {
-  [P in Exclude<keyof T, keyof U>]?: never
+  [P in Exclude<keyof T, keyof U>]?: never;
 };
 
 /**

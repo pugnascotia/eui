@@ -1,7 +1,9 @@
+/* eslint-disable import/named */
 import {
   EuiButtonIconProps,
   EuiButtonPropsForButtonOrLink,
-} from '@elastic/eui'; // eslint-disable-line import/no-unresolved
+} from '@elastic/eui';
+/* eslint-enable import/named */
 import { IconType } from '../icon';
 import { CommonProps, ExclusiveUnion } from '../common';
 import {

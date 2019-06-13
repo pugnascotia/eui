@@ -993,9 +993,7 @@ export class EuiBasicTable extends Component {
       return;
     }
     if (!this.props.onChange) {
-      throw new Error(`BasicTable is configured to be sortable on column [${
-        column.field
-      }] but
+      throw new Error(`BasicTable is configured to be sortable on column [${column.field}] but
           [onChange] is not configured. This callback must be implemented to handle the sort requests`);
     }
     return () => this.onColumnSortChange(column);

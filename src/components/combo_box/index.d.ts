@@ -4,13 +4,15 @@ import {
   FunctionComponent,
   FocusEventHandler,
 } from 'react';
-import { ListProps } from 'react-virtualized'; // eslint-disable-line import/named
+/* eslint-disable import/named */
+import { ListProps } from 'react-virtualized';
 import {
   EuiComboBoxOption,
   EuiComboBoxOptionProps,
   EuiComboBoxOptionsListPosition,
   EuiComboBoxOptionsListProps,
-} from '@elastic/eui'; // eslint-disable-line import/no-unresolved
+} from '@elastic/eui';
+/* eslint-enable import/named */
 import { RefCallback, CommonProps } from '../common';
 
 declare module '@elastic/eui' {

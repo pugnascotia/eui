@@ -61,7 +61,7 @@ export type EuiTokenMapType =
   | 'tokenModule';
 
 export const TOKEN_MAP: {
-  [mapType in EuiTokenMapType]: EuiTokenMapDisplayOptions
+  [mapType in EuiTokenMapType]: EuiTokenMapDisplayOptions;
 } = {
   tokenClass: {
     shape: 'circle',
