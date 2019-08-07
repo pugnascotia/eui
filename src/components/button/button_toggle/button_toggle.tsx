@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 
-import { ExclusiveUnion } from '../../common';
+import { ExclusiveUnion, Omit } from '../../common';
 import { EuiToggle, ToggleType } from '../../toggle';
 import { EuiButton, EuiButtonProps } from '../button';
 
@@ -41,16 +41,18 @@ export interface EuiButtonToggleProps extends EuiButtonProps {
    * Used primarily for `EuiButtonGroup`
    */
   type?: ToggleType;
+
+  onChange?: React.FormEventHandler<HTMLInputElement>;
 }
 
 type EuiButtonTogglePropsForAnchor = EuiButtonToggleProps &
-  AnchorHTMLAttributes<HTMLAnchorElement> & {
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'onChange'> & {
     href: string;
     onClick: MouseEventHandler<HTMLAnchorElement>;
   };
 
 type EuiButtonTogglePropsForButtonToggle = EuiButtonToggleProps &
-  ButtonHTMLAttributes<HTMLButtonElement> & {
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> & {
     onClick: MouseEventHandler<HTMLButtonElement>;
     value?: string;
   };
@@ -102,7 +104,6 @@ export const EuiButtonToggle: FunctionComponent<Props> = ({
       isDisabled={isDisabled}
       label={label}
       name={name}
-      // @ts-ignore @chandler
       onChange={onChange}
       type={type}
       title={label}
@@ -113,7 +114,7 @@ export const EuiButtonToggle: FunctionComponent<Props> = ({
         color={color}
         disabled={isDisabled}
         size={isIconOnly ? 's' : undefined} // only force small if it's the icon only version
-        {...rest}>
+        {...rest as Extract<EuiButtonTogglePropsForAnchor, EuiButtonTogglePropsForButtonToggle>}>
         {buttonContent}
       </EuiButton>
     </EuiToggle>

@@ -69,6 +69,7 @@ type EuiButtonPropsForAnchor = EuiButtonProps &
   AnchorHTMLAttributes<HTMLAnchorElement> & {
     href: string;
     onClick: MouseEventHandler<HTMLAnchorElement>;
+    buttonRef: Ref<HTMLAnchorElement>;
   };
 
 type EuiButtonPropsForButton = EuiButtonProps &
@@ -160,8 +161,8 @@ export const EuiButton: FunctionComponent<Props> = ({
         href={href}
         target={target}
         rel={secureRel}
-        ref={buttonRef}
-        {...rest}>
+        ref={buttonRef as Ref<HTMLAnchorElement>}
+        {...rest as EuiButtonPropsForAnchor}>
         {innerNode}
       </a>
     );
@@ -172,8 +173,8 @@ export const EuiButton: FunctionComponent<Props> = ({
       disabled={isDisabled}
       className={classes}
       type={type}
-      ref={buttonRef}
-      {...rest}>
+      ref={buttonRef as Ref<HTMLButtonElement>}
+      {...rest as EuiButtonPropsForButton}>
       {innerNode}
     </button>
   );

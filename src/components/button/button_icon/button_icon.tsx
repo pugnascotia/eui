@@ -8,7 +8,7 @@ import React, {
 import classNames from 'classnames';
 
 import { getSecureRelForTarget } from '../../../services';
-import { CommonProps, ExclusiveUnion } from '../../common';
+import { CommonProps, ExclusiveUnion, keysOf } from '../../common';
 
 import { IconType, IconSize, EuiIcon } from '../../icon';
 
@@ -63,7 +63,7 @@ const colorToClassNameMap: { [color in ButtonIconColor]: string } = {
   warning: 'euiButtonIcon--warning',
 };
 
-export const COLORS = Object.keys(colorToClassNameMap);
+export const COLORS = keysOf(colorToClassNameMap);
 
 export const EuiButtonIcon: FunctionComponent<Props> = ({
   className,
@@ -115,9 +115,8 @@ export const EuiButtonIcon: FunctionComponent<Props> = ({
         href={href}
         target={target}
         rel={secureRel}
-        // @ts-ignore don't know what's going on here @chandler
-        ref={buttonRef}
-        {...rest}>
+        ref={buttonRef as Ref<HTMLAnchorElement>}
+        {...rest as EuiButtonIconPropsForAnchor}>
         {buttonIcon}
       </a>
     );
@@ -128,9 +127,8 @@ export const EuiButtonIcon: FunctionComponent<Props> = ({
       disabled={isDisabled}
       className={classes}
       type={type}
-      // @ts-ignore don't know what's going on here @chandler
-      ref={buttonRef}
-      {...rest}>
+      ref={buttonRef as Ref<HTMLButtonElement>}
+      {...rest as EuiButtonIconPropsForButton}>
       {buttonIcon}
     </button>
   );
